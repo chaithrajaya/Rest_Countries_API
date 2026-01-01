@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Countries Explorer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>🌍 Countries Explorer</h1>
+    <button id="darkModeToggle">🌙 Dark Mode</button>
+</header>
+
+<div class="controls">
+    <input type="text" id="search-input" placeholder="Search country / capital / code">
+
+    <select id="region-filter">
+        <option value="">All Regions</option>
+        <option value="Africa">Africa</option>
+        <option value="Americas">Americas</option>
+        <option value="Asia">Asia</option>
+        <option value="Europe">Europe</option>
+        <option value="Oceania">Oceania</option>
+    </select>
+
+    <select id="sort-filter">
+        <option value="">Sort By</option>
+        <option value="az">Name A–Z</option>
+        <option value="za">Name Z–A</option>
+        <option value="pop-asc">Population ↑</option>
+        <option value="pop-desc">Population ↓</option>
+    </select>
+
+    <button id="resetFilters">Reset Filters</button>
+</div>
+
+<div id="country-list" class="country-list"></div>
+
+<div class="pagination">
+    <button id="prevBtn">⬅ Prev</button>
+    <span id="pageInfo"></span>
+    <button id="nextBtn">Next ➡</button>
+</div>
+
+<!-- Country Details Modal -->
+<div id="detailsModal" class="modal">
+    <div class="details-box">
+        <span class="close-details">&times;</span>
+        <img id="detailsFlag">
+        <h2 id="detailsName"></h2>
+        <p><strong>Capital:</strong> <span id="detailsCapital"></span></p>
+        <p><strong>Region:</strong> <span id="detailsRegion"></span></p>
+        <p><strong>Population:</strong> <span id="detailsPopulation"></span></p>
+        <p><strong>Languages:</strong> <span id="detailsLanguages"></span></p>
+        <p><strong>Currencies:</strong> <span id="detailsCurrencies"></span></p>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

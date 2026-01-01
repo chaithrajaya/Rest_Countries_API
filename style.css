@@ -1,0 +1,221 @@
+:root {
+    --bg-color: #f2f5f9;
+    --text-color: #1a1a1a;
+    --card-bg: #ffffff;
+    --primary: #4f46e5;
+    --shadow: rgba(0, 0, 0, 0.08);
+    --toggle-bg: #ffffff;
+    --toggle-color: var(--primary);
+    --toggle-hover: #e0e7ff;
+}
+
+body.dark {
+    --bg-color: #0f172a;
+    --text-color: #e5e7eb;
+    --card-bg: #1e293b;
+    --primary: #38bdf8;
+    --shadow: rgba(0, 0, 0, 0.4);
+    --toggle-bg: #1e293b;
+    --toggle-color: var(--primary);
+    --toggle-hover: #334155;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: 0.3s;
+}
+
+/* HEADER */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 25px;
+    background: var(--primary);
+    color: white;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+/* DARK MODE TOGGLE BUTTON */
+#darkModeToggle {
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 25px;
+    border: none;
+    background: var(--toggle-bg);
+    color: var(--toggle-color);
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px var(--shadow);
+    transition: 0.3s;
+}
+
+#darkModeToggle:hover {
+    background: var(--toggle-hover);
+}
+
+/* CONTROLS */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 20px;
+    justify-content: center;
+    background: var(--card-bg);
+    box-shadow: 0 4px 12px var(--shadow);
+    border-radius: 12px;
+    margin: 20px;
+}
+
+.controls input,
+.controls select,
+.controls button {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.controls input:focus,
+.controls select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 8px rgba(79, 70, 229, 0.3);
+}
+
+.controls button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.controls button:hover {
+    opacity: 0.9;
+}
+
+/* GRID */
+.country-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* CARD */
+.country-card {
+    background: var(--card-bg);
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.country-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 28px var(--shadow);
+}
+
+.country-card img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    margin-top: 10px;
+    border-radius: 6px;
+}
+
+/* PAGINATION */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 30px;
+}
+
+.pagination button {
+    padding: 8px 14px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* MODALS */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 999;
+}
+
+.modal-content {
+    display: block;
+    margin: 60px auto;
+    max-width: 90%;
+    max-height: 80%;
+}
+
+/* DETAILS MODAL */
+.details-box {
+    background: var(--card-bg);
+    color: var(--text-color);
+    width: 90%;
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 8px 24px var(--shadow);
+}
+
+.details-box img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.close,
+.close-details {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 18px;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+        margin: 10px;
+    }
+}
