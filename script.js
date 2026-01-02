@@ -90,7 +90,7 @@ function renderPage() {
             <p>Capital: ${country.capital?.[0] || "N/A"}</p>
             <p>Region: ${country.region}</p>
             <p>Population: ${country.population.toLocaleString()}</p>
-            <p>Code: ${country.cca2}</p> <!-- show code on card -->
+            <p>Code: ${country.cca2}</p>
             <img src="${country.flags.png}">
         `;
 
@@ -98,7 +98,7 @@ function renderPage() {
             detailsModal.style.display = "block";
             detailsFlag.src = country.flags.png;
             detailsName.textContent = country.name.common;
-            detailsCode.textContent = country.cca2; // show code in modal
+            detailsCode.textContent = country.cca2;  
             detailsCapital.textContent = country.capital?.[0] || "N/A";
             detailsRegion.textContent = country.region;
             detailsPopulation.textContent = country.population.toLocaleString();
