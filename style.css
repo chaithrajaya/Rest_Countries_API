@@ -167,14 +167,6 @@ header {
     z-index: 999;
 }
 
-.modal-content {
-    display: block;
-    margin: 60px auto;
-    max-width: 90%;
-    max-height: 80%;
-}
-
-/* DETAILS MODAL */
 .details-box {
     background: var(--card-bg);
     color: var(--text-color);
@@ -196,7 +188,6 @@ header {
     margin-bottom: 15px;
 }
 
-.close,
 .close-details {
     position: absolute;
     top: 20px;

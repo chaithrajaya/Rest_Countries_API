@@ -14,6 +14,7 @@ const closeDetails = document.querySelector(".close-details");
 
 const detailsFlag = document.getElementById("detailsFlag");
 const detailsName = document.getElementById("detailsName");
+const detailsCode = document.getElementById("detailsCode"); // NEW
 const detailsCapital = document.getElementById("detailsCapital");
 const detailsRegion = document.getElementById("detailsRegion");
 const detailsPopulation = document.getElementById("detailsPopulation");
@@ -25,18 +26,19 @@ let filteredCountries = [];
 let currentPage = 1;
 const itemsPerPage = 10;
 
+// Load all countries from API
 async function loadAllCountries() {
     const res = await fetch(
         "https://restcountries.com/v3.1/all?fields=name,capital,region,cca2,flags,population,languages,currencies"
     );
     allCountries = await res.json();
 
-    // Sort by Name A–Z on load
     allCountries.sort((a, b) => a.name.common.localeCompare(b.name.common));
     filteredCountries = [...allCountries];
     renderPage();
 }
 
+// Apply filters & search
 function applyFilters() {
     const searchText = searchInput.value.toLowerCase();
     const region = regionFilter.value;
@@ -68,6 +70,7 @@ function applyFilters() {
     renderPage();
 }
 
+// Render current page
 function renderPage() {
     countryListDiv.innerHTML = "";
     const start = (currentPage - 1) * itemsPerPage;
@@ -87,14 +90,15 @@ function renderPage() {
             <p>Capital: ${country.capital?.[0] || "N/A"}</p>
             <p>Region: ${country.region}</p>
             <p>Population: ${country.population.toLocaleString()}</p>
+            <p>Code: ${country.cca2}</p> <!-- show code on card -->
             <img src="${country.flags.png}">
         `;
 
-        // Only card click opens details
         card.onclick = () => {
             detailsModal.style.display = "block";
             detailsFlag.src = country.flags.png;
             detailsName.textContent = country.name.common;
+            detailsCode.textContent = country.cca2; // show code in modal
             detailsCapital.textContent = country.capital?.[0] || "N/A";
             detailsRegion.textContent = country.region;
             detailsPopulation.textContent = country.population.toLocaleString();
@@ -115,24 +119,17 @@ function renderPage() {
 prevBtn.onclick = () => { if(currentPage>1){currentPage--;renderPage();} };
 nextBtn.onclick = () => { if(currentPage<Math.ceil(filteredCountries.length/itemsPerPage)){currentPage++;renderPage();} };
 
-// Filters & Sorting events
+// Event listeners
 searchInput.oninput = applyFilters;
 regionFilter.onchange = applyFilters;
 sortFilter.onchange = applyFilters;
-
-// Reset button
 resetBtn.onclick = () => {
     searchInput.value = "";
     regionFilter.value = "";
     sortFilter.value = "";
     applyFilters();
 };
-
-// Dark mode
 darkModeToggle.onclick = () => document.body.classList.toggle("dark");
-
-// Close modal
 closeDetails.onclick = () => detailsModal.style.display = "none";
 
-// Initialize
 document.addEventListener("DOMContentLoaded", loadAllCountries);
