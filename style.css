@@ -135,29 +135,6 @@ header {
     border-radius: 6px;
 }
 
-/* PAGINATION */
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    padding-bottom: 30px;
-}
-
-.pagination button {
-    padding: 8px 14px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.pagination button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
 /* MODALS */
 .modal {
     display: none;

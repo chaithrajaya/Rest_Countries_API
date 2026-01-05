@@ -5,16 +5,12 @@ const sortFilter = document.getElementById("sort-filter");
 const resetBtn = document.getElementById("resetFilters");
 const darkModeToggle = document.getElementById("darkModeToggle");
 
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-const pageInfo = document.getElementById("pageInfo");
-
 const detailsModal = document.getElementById("detailsModal");
 const closeDetails = document.querySelector(".close-details");
 
 const detailsFlag = document.getElementById("detailsFlag");
 const detailsName = document.getElementById("detailsName");
-const detailsCode = document.getElementById("detailsCode"); // NEW
+const detailsCode = document.getElementById("detailsCode"); 
 const detailsCapital = document.getElementById("detailsCapital");
 const detailsRegion = document.getElementById("detailsRegion");
 const detailsPopulation = document.getElementById("detailsPopulation");
@@ -23,8 +19,6 @@ const detailsCurrencies = document.getElementById("detailsCurrencies");
 
 let allCountries = [];
 let filteredCountries = [];
-let currentPage = 1;
-const itemsPerPage = 10;
 
 // Load all countries from API
 async function loadAllCountries() {
@@ -35,7 +29,7 @@ async function loadAllCountries() {
 
     allCountries.sort((a, b) => a.name.common.localeCompare(b.name.common));
     filteredCountries = [...allCountries];
-    renderPage();
+    renderCountries();
 }
 
 // Apply filters & search
@@ -55,34 +49,28 @@ function applyFilters() {
         return true;
     });
 
-    // Sorting
+    // Sorting only by Name A–Z / Z–A
     filteredCountries.sort((a, b) => {
         switch (sortBy) {
             case "az": return a.name.common.localeCompare(b.name.common);
             case "za": return b.name.common.localeCompare(a.name.common);
-            case "pop-asc": return a.population - b.population;
-            case "pop-desc": return b.population - a.population;
             default: return 0;
         }
     });
 
-    currentPage = 1;
-    renderPage();
+    renderCountries();
 }
 
-// Render current page
-function renderPage() {
+// Render all countries (no pagination)
+function renderCountries() {
     countryListDiv.innerHTML = "";
-    const start = (currentPage - 1) * itemsPerPage;
-    const pageItems = filteredCountries.slice(start, start + itemsPerPage);
 
-    if (pageItems.length === 0) {
+    if (filteredCountries.length === 0) {
         countryListDiv.innerHTML = "<p>No countries found</p>";
-        pageInfo.textContent = "";
         return;
     }
 
-    pageItems.forEach(country => {
+    filteredCountries.forEach(country => {
         const card = document.createElement("div");
         card.className = "country-card";
         card.innerHTML = `
@@ -108,16 +96,7 @@ function renderPage() {
 
         countryListDiv.appendChild(card);
     });
-
-    const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
-    pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
-    prevBtn.disabled = currentPage === 1;
-    nextBtn.disabled = currentPage === totalPages;
 }
-
-// Pagination
-prevBtn.onclick = () => { if(currentPage>1){currentPage--;renderPage();} };
-nextBtn.onclick = () => { if(currentPage<Math.ceil(filteredCountries.length/itemsPerPage)){currentPage++;renderPage();} };
 
 // Event listeners
 searchInput.oninput = applyFilters;
