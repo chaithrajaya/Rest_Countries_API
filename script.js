@@ -20,16 +20,28 @@ const detailsCurrencies = document.getElementById("detailsCurrencies");
 let allCountries = [];
 let filteredCountries = [];
 
-// Load all countries from API
-async function loadAllCountries() {
-    const res = await fetch(
-        "https://restcountries.com/v3.1/all?fields=name,capital,region,cca2,flags,population,languages,currencies"
-    );
-    allCountries = await res.json();
+// Check dark mode from localStorage
+if(localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark');
+}
 
-    allCountries.sort((a, b) => a.name.common.localeCompare(b.name.common));
-    filteredCountries = [...allCountries];
-    renderCountries();
+// Load all countries from API with error handling
+async function loadAllCountries() {
+    try {
+        const res = await fetch(
+            "https://restcountries.com/v3.1/all?fields=name,capital,region,cca2,flags,population,languages,currencies"
+        );
+
+        if(!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+
+        allCountries = await res.json();
+        allCountries.sort((a, b) => a.name.common.localeCompare(b.name.common));
+        filteredCountries = [...allCountries];
+        renderCountries();
+    } catch (error) {
+        console.error("Failed to load countries:", error);
+        countryListDiv.innerHTML = "<p style='color:red;'>Failed to load countries. Please try again later.</p>";
+    }
 }
 
 // Apply filters & search
@@ -43,19 +55,16 @@ function applyFilters() {
         const capitalMatch = country.capital?.[0]?.toLowerCase().includes(searchText);
         const codeMatch = country.cca2.toLowerCase().includes(searchText);
 
-        if (searchText && !(nameMatch || capitalMatch || codeMatch)) return false;
-        if (region && country.region !== region) return false;
+        if(searchText && !(nameMatch || capitalMatch || codeMatch)) return false;
+        if(region && country.region !== region) return false;
 
         return true;
     });
 
-    // Sorting only by Name A–Z / Z–A
-    filteredCountries.sort((a, b) => {
-        switch (sortBy) {
-            case "az": return a.name.common.localeCompare(b.name.common);
-            case "za": return b.name.common.localeCompare(a.name.common);
-            default: return 0;
-        }
+    filteredCountries.sort((a,b) => {
+        if(sortBy === "az") return a.name.common.localeCompare(b.name.common);
+        if(sortBy === "za") return b.name.common.localeCompare(a.name.common);
+        return 0;
     });
 
     renderCountries();
@@ -65,7 +74,7 @@ function applyFilters() {
 function renderCountries() {
     countryListDiv.innerHTML = "";
 
-    if (filteredCountries.length === 0) {
+    if(filteredCountries.length === 0){
         countryListDiv.innerHTML = "<p>No countries found</p>";
         return;
     }
@@ -77,25 +86,30 @@ function renderCountries() {
             <h3>${country.name.common}</h3>
             <p>Capital: ${country.capital?.[0] || "N/A"}</p>
             <p>Region: ${country.region}</p>
-            <p>Population: ${country.population.toLocaleString()}</p>
+            <p>Population: ${country.population?.toLocaleString() || "N/A"}</p>
             <p>Code: ${country.cca2}</p>
-            <img src="${country.flags.png}">
+            <img src="${country.flags?.png || ''}" loading="lazy" alt="Flag of ${country.name.common}">
         `;
 
         card.onclick = () => {
             detailsModal.style.display = "block";
-            detailsFlag.src = country.flags.png;
-            detailsName.textContent = country.name.common;
-            detailsCode.textContent = country.cca2;  
+            detailsFlag.src = country.flags?.png || '';
+            detailsName.textContent = country.name.common || "N/A";
+            detailsCode.textContent = country.cca2 || "N/A";  
             detailsCapital.textContent = country.capital?.[0] || "N/A";
-            detailsRegion.textContent = country.region;
-            detailsPopulation.textContent = country.population.toLocaleString();
+            detailsRegion.textContent = country.region || "N/A";
+            detailsPopulation.textContent = country.population?.toLocaleString() || "N/A";
             detailsLanguages.textContent = country.languages ? Object.values(country.languages).join(", ") : "N/A";
             detailsCurrencies.textContent = country.currencies ? Object.keys(country.currencies).join(", ") : "N/A";
         };
 
         countryListDiv.appendChild(card);
     });
+}
+
+// Close modal on outside click
+detailsModal.onclick = (e) => {
+    if(e.target === detailsModal) detailsModal.style.display = "none";
 }
 
 // Event listeners
@@ -108,7 +122,10 @@ resetBtn.onclick = () => {
     sortFilter.value = "";
     applyFilters();
 };
-darkModeToggle.onclick = () => document.body.classList.toggle("dark");
+darkModeToggle.onclick = () => {
+    document.body.classList.toggle("dark");
+    localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+};
 closeDetails.onclick = () => detailsModal.style.display = "none";
 
 document.addEventListener("DOMContentLoaded", loadAllCountries);
