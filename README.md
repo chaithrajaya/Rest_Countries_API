@@ -1,4 +1,4 @@
-🌍 Countries Explorer Web Application
+🌍 REST COUNTRIES API Web Application
 Project Overview
 
 Countries Explorer is a frontend web application that allows users to browse and explore information about countries around the world.
@@ -23,6 +23,22 @@ Provides country details such as name, capital, region, population, flags, langu
 
 LINK: https://restcountries.com/v3.1/all?fields=name,capital,region,cca2,flags,population,languages,currencies
 
+PROJECT WORKFLOW:
+
+User enters a country name or explores all countries
+
+JavaScript sends an HTTP request using fetch()
+
+REST Countries API returns country data in JSON format
+
+The data is parsed and stored locally
+
+Filtered and sorted results are rendered dynamically on the UI
+
+User interactions update the UI without page reload
+
+Errors are handled and displayed properly
+
 ✨ Features
 
 Fetches live country data from an external API
@@ -31,11 +47,7 @@ Displays all countries in a card-based layout
 
 Search by:
 
-Country name
-
-Capital
-
-Country code
+Country name, Capital, Country code
 
 Filter countries by region
 
@@ -47,10 +59,6 @@ Dark mode toggle with persistent theme storage
 
 Reset filters option
 
-Lazy loading of country flag images
-
-Graceful error handling for API failures
-
 
 🚀 Future Enhancements
 
@@ -61,8 +69,6 @@ Favorite countries feature
 Map integration
 
 Offline support
-
-Advanced sorting (population, region)
 
 WebPage Link : https://chaithrajaya.github.io/Rest_Countries_API/
 
