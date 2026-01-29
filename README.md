@@ -51,13 +51,6 @@ Lazy loading of country flag images
 
 Graceful error handling for API failures
 
-📂 Project Structure
-countries-explorer/
-│
-├── index.html      # Main HTML file
-├── style.css       # Styling and dark mode
-├── script.js       # JavaScript logic
-└── README.md       # Project documentation
 
 🚀 Future Enhancements
 
@@ -70,6 +63,8 @@ Map integration
 Offline support
 
 Advanced sorting (population, region)
+
+WebPage Link : https://chaithrajaya.github.io/Rest_Countries_API/
 
 👨‍💻 Author
 
